@@ -6,13 +6,15 @@
     <data>
         <import type="com.example.appforuihomework.WeatherData" />
         <variable name="item" type="WeatherData" />
+        <variable name="viewModel" type="com.example.appforuihomework.MainViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="3dp"
-        android:paddingEnd="3dp">
+        android:paddingEnd="3dp"
+        android:onClick="@{()-> viewModel.onEventClick()}">
 
         <LinearLayout
             android:id="@+id/bottom_rec_container"
@@ -60,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:gravity="end|center_vertical">
 
                 <TextView
@@ -80,6 +82,17 @@
                     android:singleLine="true"/>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/bottom_recview_touchImage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="&gt;"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:onClick="@{()-> viewModel.onEventClick()}"/>
         </LinearLayout>
 
         <View
