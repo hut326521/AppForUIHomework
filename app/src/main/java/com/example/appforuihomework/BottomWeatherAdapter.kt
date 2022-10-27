@@ -1,16 +1,15 @@
 package com.example.appforuihomework
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-class WeatherAdapter(
-    private var context: Context, private var list: List<WeatherData>):
-    RecyclerView.Adapter<WeatherAdapter.ViewHolder>(){
-
+class BottomWeatherAdapter(
+    private var context: Context, private var list: List<WeatherData>): RecyclerView.Adapter<BottomWeatherAdapter.ViewHolder>(){
     inner class ViewHolder(var dataBinding: ViewDataBinding) :
         RecyclerView.ViewHolder(dataBinding.root)
 
@@ -25,6 +24,7 @@ class WeatherAdapter(
     }
 
     override fun getItemCount(): Int {
+        Log.d("MikeTest2","length"+list.size.toString())
         return list.size
     }
 

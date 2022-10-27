@@ -1,26 +1,24 @@
 package com.example.appforuihomework
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     private val model: MainViewModel by viewModels()
-
-    private var mRecyclerView: RecyclerView? = null
+    private var mTopRecyclerView: RecyclerView? = null
+    private var mBottomRecyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mRecyclerView = findViewById(R.id.recycler_view)
+
+        //TODO: change way to find ID
+        mTopRecyclerView = findViewById(R.id.recycler_view_top)
+        mBottomRecyclerView = findViewById(R.id.recycler_view_bottom)
 
         initView()
         initData()
@@ -29,14 +27,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        mRecyclerView?.layoutManager = layoutManager
+        val layoutManagerTop = LinearLayoutManager(this)
+        layoutManagerTop.orientation = LinearLayoutManager.HORIZONTAL
+        mTopRecyclerView?.layoutManager = layoutManagerTop
+
+        val layoutManagerBottom = LinearLayoutManager(this)
+        layoutManagerBottom.orientation = LinearLayoutManager.VERTICAL
+        mBottomRecyclerView?.layoutManager = layoutManagerBottom
     }
 
     private fun initData() {
-        model.weatherList.observe(this, Observer {
-            mRecyclerView?.adapter = WeatherAdapter(this@MainActivity, it)
+        model.weatherGoodList.observe(this, Observer {
+            mTopRecyclerView?.adapter = TopWeatherAdapter(this@MainActivity, it)
+        })
+        model.weatherBadList.observe(this, Observer {
+            mBottomRecyclerView?.adapter = BottomWeatherAdapter(this@MainActivity, it)
         })
     }
 }
