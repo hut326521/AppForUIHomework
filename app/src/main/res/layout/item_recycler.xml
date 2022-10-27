@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.example.appforuihomework.WeatherData" />
+        <variable name="item" type="WeatherData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
+
+        <TextView
+            android:id="@+id/site_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`ID: ` + item.siteid}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="場站名稱" />
+
+        <TextView
+            android:id="@+id/site_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`名稱: ` + item.sitename}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/site_id"
+            tool:text="地" />
+
+        <TextView
+            android:id="@+id/country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`城市: ` + item.county}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/site_name"
+            tool:text="場站目前車輛數量" />
+
+        <TextView
+            android:id="@+id/pm25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`數值: ` + item.pm25}"
+            app:layout_constraintStart_toStartOf="@id/guide_50"
+            app:layout_constraintTop_toBottomOf="@+id/site_name"
+            tool:text="空位數量" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`狀態: ` + item.status}"
+            app:layout_constraintStart_toStartOf="@id/guide_50"
+            app:layout_constraintTop_toBottomOf="@+id/pm25"
+            tool:text="空位數量" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/status" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
