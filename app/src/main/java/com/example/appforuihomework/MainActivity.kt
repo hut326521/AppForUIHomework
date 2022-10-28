@@ -3,6 +3,7 @@ package com.example.appforuihomework
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,9 +21,9 @@ class MainActivity : AppCompatActivity() {
     private var mBottomRecyclerView: RecyclerView? = null
     private var mSearchRecyclerView: RecyclerView? = null
     private var mHomeTitle: TextView? = null
-    private var mSearchButton: TextView? = null
+    private var mSearchButton: ImageView? = null
     private var mSplitLine2: View? = null
-    private var mBackButton: TextView? = null
+    private var mBackButton: ImageView? = null
     private var mSearchEditText: EditText? = null
     private var mSearchAdapter: SearchWeatherAdapter? = null
 
