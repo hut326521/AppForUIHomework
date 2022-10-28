@@ -86,8 +86,4 @@ class MainViewModel : ViewModel() {
             weatherBadList.postValue(BigTempList)
         }
     }
-
-    fun onEventClick() {
-        Log.d("MikeTest","onEventClick")
-    }
 }

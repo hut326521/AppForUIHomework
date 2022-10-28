@@ -6,15 +6,14 @@
     <data>
         <import type="com.example.appforuihomework.WeatherData" />
         <variable name="item" type="WeatherData" />
-        <variable name="viewModel" type="com.example.appforuihomework.MainViewModel" />
+        <variable name="clickable" type="com.example.appforuihomework.BottomWeatherAdapter" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="3dp"
-        android:paddingEnd="3dp"
-        android:onClick="@{()-> viewModel.onEventClick()}">
+        android:paddingEnd="3dp">
 
         <LinearLayout
             android:id="@+id/bottom_rec_container"
@@ -92,7 +91,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:onClick="@{()-> viewModel.onEventClick()}"/>
+                android:onClick="@{()-> clickable.onEventClick()}"/>
         </LinearLayout>
 
         <View

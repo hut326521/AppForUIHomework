@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -18,24 +19,26 @@ class BottomWeatherAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int): ViewHolder {
 
+        val layoutNormal: ViewDataBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.item_recycler, parent, false
+        )
+
+        val layoutEvent: ViewDataBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.item_recycler_event, parent, false
+        )
+        layoutEvent.setVariable(BR.clickable, this)
+
         return when (viewType) {
             1->{
-                ViewHolder(DataBindingUtil.inflate(
-                    LayoutInflater.from(context),
-                    R.layout.item_recycler, parent, false
-                ))
+                ViewHolder(layoutNormal)
             }
             2->{
-                ViewHolder(DataBindingUtil.inflate(
-                    LayoutInflater.from(context),
-                    R.layout.item_recycler_event, parent, false
-                ))
+                ViewHolder(layoutEvent)
             }
             else->{
-                ViewHolder(DataBindingUtil.inflate(
-                    LayoutInflater.from(context),
-                    R.layout.item_recycler, parent, false
-                ))
+                ViewHolder(layoutNormal)
             }
         }
     }
@@ -51,5 +54,9 @@ class BottomWeatherAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if(list[position].isEvent) 2 else 1
+    }
+
+    fun onEventClick() {
+        Toast.makeText(context, "Hi UI!", Toast.LENGTH_SHORT).show()
     }
 }
