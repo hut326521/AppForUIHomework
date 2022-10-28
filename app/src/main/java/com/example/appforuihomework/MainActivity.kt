@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var mSplitLine2: View? = null
     private var mBackButton: TextView? = null
     private var mSearchEditText: EditText? = null
+    private var mSearchAdapter: SearchWeatherAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         mSplitLine2 = findViewById(R.id.splitLine2)
         mBackButton = findViewById(R.id.BackButton)
         mSearchEditText = findViewById(R.id.Search_Edit_text)
+
+        mSearchEditText?.doAfterTextChanged {
+            filter(it.toString())
+        }
 
         initView()
         initData()
@@ -66,7 +73,8 @@ class MainActivity : AppCompatActivity() {
             mBottomRecyclerView?.adapter = BottomWeatherAdapter(this@MainActivity, it)
         })
         model.allDataList.observe(this, Observer {
-            mSearchRecyclerView?.adapter = SearchWeatherAdapter(this@MainActivity, it)
+            mSearchAdapter = SearchWeatherAdapter(this@MainActivity, it)
+            mSearchRecyclerView?.adapter = mSearchAdapter
         })
     }
 
@@ -92,5 +100,24 @@ class MainActivity : AppCompatActivity() {
         mSearchRecyclerView?.visibility = View.GONE
         mSearchEditText?.visibility = View.GONE
         mBackButton?.visibility = View.GONE
+    }
+
+    private fun filter(s: String){
+        val filteredList: ArrayList<WeatherData> = ArrayList()
+
+        if(model.allDataList.value?.isNotEmpty() == true){
+            for (item in model.allDataList.value!!) {
+                if (item.sitename!!.contains(s)) {
+                    filteredList.add(item)
+                }
+            }
+            if (filteredList.isEmpty()) {
+                Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
+            } else {
+                mSearchAdapter?.filterList(filteredList)
+            }
+        }
+
+
     }
 }

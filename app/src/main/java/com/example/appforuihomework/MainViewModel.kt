@@ -1,8 +1,8 @@
 package com.example.appforuihomework
 
-import androidx.databinding.BaseObservable
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
@@ -47,6 +47,7 @@ class MainViewModel : ViewModel() {
                             AllTempList.add(
                                 WeatherData(
                                     true,
+                                    true,
                                     weatherObj.getString("siteid"),
                                     weatherObj.getString("sitename"),
                                     weatherObj.getString("county"),
@@ -57,6 +58,7 @@ class MainViewModel : ViewModel() {
                         } else {
                             AllTempList.add(
                                 WeatherData(
+                                    true,
                                     false,
                                     weatherObj.getString("siteid"),
                                     weatherObj.getString("sitename"),
@@ -72,6 +74,7 @@ class MainViewModel : ViewModel() {
                                 BigTempList.add(
                                     WeatherData(
                                         true,
+                                        true,
                                         weatherObj.getString("siteid"),
                                         weatherObj.getString("sitename"),
                                         weatherObj.getString("county"),
@@ -82,6 +85,7 @@ class MainViewModel : ViewModel() {
                             } else {
                                 BigTempList.add(
                                     WeatherData(
+                                        true,
                                         false,
                                         weatherObj.getString("siteid"),
                                         weatherObj.getString("sitename"),
@@ -94,6 +98,7 @@ class MainViewModel : ViewModel() {
                         } else {
                             SmallTempList.add(
                                 WeatherData(
+                                    true,
                                     false,
                                     weatherObj.getString("siteid"),
                                     weatherObj.getString("sitename"),
@@ -112,5 +117,4 @@ class MainViewModel : ViewModel() {
             }
         }
     }
-
 }

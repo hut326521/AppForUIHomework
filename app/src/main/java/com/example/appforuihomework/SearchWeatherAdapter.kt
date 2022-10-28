@@ -5,19 +5,39 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.recyclerview.widget.RecyclerView
+import java.util.ArrayList
 
 
 class SearchWeatherAdapter(
-    private var context: Context, private var list: List<WeatherData>): RecyclerView.Adapter<SearchWeatherAdapter.ViewHolder>(){
+    private var context: Context, private var list: List<WeatherData>):
+    RecyclerView.Adapter<SearchWeatherAdapter.ViewHolder>() {
     inner class ViewHolder(var dataBinding: ViewDataBinding) :
         RecyclerView.ViewHolder(dataBinding.root)
 
+
+    fun filterList(filterlist: ArrayList<WeatherData>) {
+        list = filterlist
+
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int): ViewHolder {
+
+        val layoutNormal: ViewDataBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.search_item_recycler, parent, false
+        )
 
         val layoutEvent: ViewDataBinding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
@@ -25,7 +45,17 @@ class SearchWeatherAdapter(
         )
         layoutEvent.setVariable(BR.clickable_search, this)
 
-        return ViewHolder(layoutEvent)
+        return when (viewType) {
+            1->{
+                ViewHolder(layoutNormal)
+            }
+            2->{
+                ViewHolder(layoutEvent)
+            }
+            else->{
+                ViewHolder(layoutNormal)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +70,7 @@ class SearchWeatherAdapter(
     override fun getItemViewType(position: Int): Int {
         return if(list[position].isEvent) 2 else 1
     }
+
 
     fun onEventClick() {
         Toast.makeText(context, "Hi UI!", Toast.LENGTH_SHORT).show()
