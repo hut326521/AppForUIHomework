@@ -2,7 +2,6 @@ package com.example.appforuihomework
 
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.lifecycle.Observer
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
@@ -31,6 +30,7 @@ class MainViewModel : ViewModel() {
                 val AllTempList = mutableListOf<WeatherData>()
                 val url = "https://data.epa.gov.tw/api/v2/aqx_p_432?limit=1000&api_key=cebebe84-e17d-4022-a28f-81097fda5896&sort=ImportDate%20desc&format=json"
                 val weatherJsonStr = URL(url).readText()
+                //Log.d("MikeTest", "weatherJson: $weatherJsonStr")
                 val weatherJsonArr = JSONObject(weatherJsonStr).getJSONArray("records")
 
 
@@ -47,7 +47,6 @@ class MainViewModel : ViewModel() {
                             AllTempList.add(
                                 WeatherData(
                                     true,
-                                    true,
                                     weatherObj.getString("siteid"),
                                     weatherObj.getString("sitename"),
                                     weatherObj.getString("county"),
@@ -58,7 +57,6 @@ class MainViewModel : ViewModel() {
                         } else {
                             AllTempList.add(
                                 WeatherData(
-                                    true,
                                     false,
                                     weatherObj.getString("siteid"),
                                     weatherObj.getString("sitename"),
@@ -74,7 +72,6 @@ class MainViewModel : ViewModel() {
                                 BigTempList.add(
                                     WeatherData(
                                         true,
-                                        true,
                                         weatherObj.getString("siteid"),
                                         weatherObj.getString("sitename"),
                                         weatherObj.getString("county"),
@@ -85,7 +82,6 @@ class MainViewModel : ViewModel() {
                             } else {
                                 BigTempList.add(
                                     WeatherData(
-                                        true,
                                         false,
                                         weatherObj.getString("siteid"),
                                         weatherObj.getString("sitename"),
@@ -98,7 +94,6 @@ class MainViewModel : ViewModel() {
                         } else {
                             SmallTempList.add(
                                 WeatherData(
-                                    true,
                                     false,
                                     weatherObj.getString("siteid"),
                                     weatherObj.getString("sitename"),
