@@ -112,11 +112,7 @@ class MainActivity : AppCompatActivity() {
                     filteredList.add(item)
                 }
             }
-            if (filteredList.isEmpty()) {
-                Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
-            } else {
-                mSearchAdapter?.filterList(filteredList)
-            }
+            mSearchAdapter?.filterList(filteredList)
         }
 
 
