@@ -25,12 +25,14 @@ class MainViewModel : ViewModel() {
     private fun getBikeDataFromServer() {
         runBlocking {
             launch {
-                val BigTempList = mutableListOf<WeatherData>()
-                val SmallTempList = mutableListOf<WeatherData>()
-                val AllTempList = mutableListOf<WeatherData>()
+                val bigTempList = mutableListOf<WeatherData>()
+                val smallTempList = mutableListOf<WeatherData>()
+                val allTempList = mutableListOf<WeatherData>()
                 val url = "https://data.epa.gov.tw/api/v2/aqx_p_432?limit=1000&api_key=cebebe84-e17d-4022-a28f-81097fda5896&sort=ImportDate%20desc&format=json"
                 val weatherJsonStr = URL(url).readText()
-                //Log.d("MikeTest", "weatherJson: $weatherJsonStr")
+                if(!weatherJsonStr.contains("records")){
+                    return@launch
+                }
                 val weatherJsonArr = JSONObject(weatherJsonStr).getJSONArray("records")
 
 
@@ -44,7 +46,7 @@ class MainViewModel : ViewModel() {
 
                     if(pm.isNotEmpty()) {
                         if(isEvent) {
-                            AllTempList.add(
+                            allTempList.add(
                                 WeatherData(
                                     true,
                                     weatherObj.getString("siteid"),
@@ -55,7 +57,7 @@ class MainViewModel : ViewModel() {
                                 )
                             )
                         } else {
-                            AllTempList.add(
+                            allTempList.add(
                                 WeatherData(
                                     false,
                                     weatherObj.getString("siteid"),
@@ -69,7 +71,7 @@ class MainViewModel : ViewModel() {
 
                         if(pm.toInt() > splitThreshold) {
                             if(isEvent) {
-                                BigTempList.add(
+                                bigTempList.add(
                                     WeatherData(
                                         true,
                                         weatherObj.getString("siteid"),
@@ -80,7 +82,7 @@ class MainViewModel : ViewModel() {
                                     )
                                 )
                             } else {
-                                BigTempList.add(
+                                bigTempList.add(
                                     WeatherData(
                                         false,
                                         weatherObj.getString("siteid"),
@@ -92,7 +94,7 @@ class MainViewModel : ViewModel() {
                                 )
                             }
                         } else {
-                            SmallTempList.add(
+                            smallTempList.add(
                                 WeatherData(
                                     false,
                                     weatherObj.getString("siteid"),
@@ -106,9 +108,9 @@ class MainViewModel : ViewModel() {
                     }
                 }
 
-                weatherGoodList.postValue(SmallTempList)
-                weatherBadList.postValue(BigTempList)
-                allDataList.postValue(AllTempList)
+                weatherGoodList.postValue(smallTempList)
+                weatherBadList.postValue(bigTempList)
+                allDataList.postValue(allTempList)
             }
         }
     }

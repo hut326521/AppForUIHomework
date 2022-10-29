@@ -112,9 +112,8 @@ class MainActivity : AppCompatActivity() {
                     filteredList.add(item)
                 }
             }
-            mSearchAdapter?.filterList(filteredList)
         }
 
-
+        mSearchAdapter?.filterList(filteredList)
     }
 }
